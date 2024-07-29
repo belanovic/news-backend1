@@ -1,0 +1,31 @@
+{
+  "name": "site-news-backend",
+  "version": "1.0.0",
+  "description": "backend for news site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "upload": "git add . && git commit -m 'msg' && git push"
+  },
+  "engines": {
+    "node": "20.15.1"
+  },
+  "author": "Goran Belanovic",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
+    "cheerio": "^1.0.0-rc.10",
+    "config": "^3.3.6",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "joi": "^17.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "modifyerror": "^1.0.2",
+    "mongoose": "^8.5.0",
+    "twit": "^2.2.11"
+  }
+}
