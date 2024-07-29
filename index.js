@@ -21,7 +21,7 @@ process.env.TZ = "Europe/Belgrade";
 const hostIP = config.get('hostIP');
 const port = process.env.PORT || 4000; 
 
-console.log('evo meeeeeeeeeeeeeeeeeeeeeeeee')
+console.log('evo meee')
 
 server.listen(port, hostIP, () => console.log(`Server is listening on port ${port}`));
 
