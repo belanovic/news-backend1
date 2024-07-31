@@ -14,7 +14,7 @@ module.exports = function (app) {
             res.setHeader('Access-Control-Allow-Origin', req.headers.origin); 
         }
         
-        //  Website you wish to allow to connect
+        ////  Website you wish to allow to connect
 
         //  res.setHeader('Access-Control-Allow-Origin', '*'); 
 
