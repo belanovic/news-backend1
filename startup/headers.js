@@ -4,7 +4,7 @@ module.exports = function (app) {
     let allowOrigin;
 
     app.use(function (req, res, next) {  
-        if(
+      /*   if(
             req.headers.origin 
             && (req.headers.origin.includes('http://localhost') 
             || req.headers.origin == 'https://vestiproba1.netlify.app' 
@@ -12,7 +12,10 @@ module.exports = function (app) {
         ) 
         {
             res.setHeader('Access-Control-Allow-Origin', req.headers.origin); 
-        }
+        } */
+
+        if(req.headers.origin) res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+
         
         ////  Website you wish to allow to connect
 
