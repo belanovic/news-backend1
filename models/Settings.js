@@ -5,6 +5,6 @@ const settingsSchema = new mongoose.Schema({
     settings: {}
 })
 
-const Settings = mongoose.model('settings', settingsSchema);
+const Settings = mongoose.model('settings1', settingsSchema);
 
 module.exports = Settings;
