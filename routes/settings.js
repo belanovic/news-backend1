@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const Settings = require('../models/Settings');
+
 const auth = require('../middleware/auth');
 const modifyError = require('modifyerror');
 
 router.get('/getSettingsCMS', auth, async (req, res) => {
     
+    const Settings = require('../models/Settings')(req.headers.origin);
      
     function SettingsMsg(isSuccess, result) {
         this.isSuccess = isSuccess; 
@@ -28,6 +29,7 @@ router.get('/getSettingsCMS', auth, async (req, res) => {
 })
 router.get('/getSettingsFE', async (req, res) => {
     
+    const Settings = require('../models/Settings')(req.headers.origin);
      
     function SettingsMsg(isSuccess, result) {
         this.isSuccess = isSuccess; 
@@ -51,7 +53,7 @@ router.get('/getSettingsFE', async (req, res) => {
 
 
 router.put('/updateSettings', auth, async (req, res) => {
-    
+    const Settings = require('../models/Settings')(req.headers.origin);
      
     function SettingsMsg(isSuccess, result) {
         this.isSuccess = isSuccess; 

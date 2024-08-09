@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const Article = require('../models/Article');
 const auth = require('../middleware/auth');
 const modifyError = require('modifyerror');
 
+
 router.put('/updateFrontpage', auth, async (req, res) => {
+    const Article = require('../models/Article')(req.headers.origin);
     try {
         const allArticles = await Article.find();
         const modifiedAllArticles = allArticles.map((prom) => {

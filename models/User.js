@@ -62,12 +62,15 @@ const userSchema = new mongoose.Schema({
 
 })
 
+
+
+
 userSchema.methods.generateToken = function () {
     const token = jwt.sign(_.pick(this, ['_id', 'username']), config.get('jwtPrivateKey'));
     return token
 }
 
-const User = mongoose.model('user', userSchema);
+
 
 function validateUser(user) {
     const schema = Joi.object( {
@@ -91,10 +94,34 @@ function validateUserAuth(userAuth) {
     return schema.validate(userAuth);
 }
 
-module.exports.User = User;
+
 module.exports.validateUser = validateUser;
 module.exports.validateUserAuth = validateUserAuth;
 module.exports.validateData = validateData;
+module.exports.createModel = createModel;
+
+const copies = config.get('copies').split(' ');
+
+function createModel(origin) {
+
+    let userSuffix;
+
+    copies.forEach((copy, i) => {
+        if(origin.includes('localhost')) {
+            userSuffix = '';
+            return;
+        }
+        if(origin.includes(copy)) {
+            userSuffix = copy;
+            if(copy == '0') userSuffix == '';
+        } else {
+            userSuffix = '';
+        }
+        
+    })
+    
+    return mongoose.model(`user${userSuffix}`, userSchema);
+}
 
 function validateData(type, userData) {
     let template;
@@ -121,3 +148,6 @@ function validateData(type, userData) {
     const joiSchema = Joi.object(template);
     return joiSchema.validate(userData);
 }
+
+
+

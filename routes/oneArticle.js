@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const Article = require('../models/Article');
 const auth = require('../middleware/auth');
 const modifyError = require('modifyerror');
 
+
 router.get('/oneArticleCMS/:id', auth, async (req, res) => {
+    const Article = require('../models/Article')(req.headers.origin);
     try {
         const articleFound = await Article.findById(req.params.id); 
         return res.json({articleFound: articleFound});
@@ -14,6 +15,7 @@ router.get('/oneArticleCMS/:id', auth, async (req, res) => {
     }
 })
 router.get('/oneArticleFE/:id', async (req, res) => {
+    const Article = require('../models/Article')(req.headers.origin);
 
     try {
         const articleFound = await Article.findById(req.params.id);
@@ -25,6 +27,7 @@ router.get('/oneArticleFE/:id', async (req, res) => {
 })
 
 router.post('/oneArticle', auth, async (req, res) => {
+    const Article = require('../models/Article')(req.headers.origin);
     const oneArticle = new Article({
         category: req.body.category,
         published: req.body.published,
@@ -63,6 +66,7 @@ router.post('/oneArticle', auth, async (req, res) => {
 })
 
 router.put('/oneArticle/:id', auth, async (req, res) => {
+    const Article = require('../models/Article')(req.headers.origin);
     function UpdateMsg(isSuccess, result) {
         this.isSuccess = isSuccess; 
         if(isSuccess) {
@@ -86,6 +90,7 @@ router.put('/oneArticle/:id', auth, async (req, res) => {
 })
 
 router.delete('/oneArticle/:id', auth, async (req, res) => {
+    const Article = require('../models/Article')(req.headers.origin);
     try {
         const articleDeleted = await Article.findByIdAndDelete(req.params.id);
         res.json({articleDeleted: articleDeleted});

@@ -1,12 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const { User, validateData } = require('../models/User');
+const { validateData } = require('../models/User');
+
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const modifyError = require('modifyerror');
 
 
 router.post('/login', async (req, res) => {
+
+    const { createModel } = require('../models/User');
+    const User = createModel(req.headers.origin)
+
     function LoginMsg(isSuccess, result, token) {
         this.isSuccess = isSuccess; 
         if(isSuccess) {

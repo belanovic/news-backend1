@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 const { boolean } = require('joi');
+const config = require('config');
 
 const articleSchema = new mongoose.Schema({
     category: {
@@ -102,6 +103,26 @@ const articleSchema = new mongoose.Schema({
 
 })
 
-const Article = mongoose.model('Article', articleSchema);
+const copies = config.get('copies').split(' ');
 
-module.exports = Article;
+module.exports = function createModel(origin) {
+
+    let articleSuffix;
+
+    copies.forEach((copy, i) => {
+        if(origin.includes('localhost')) {
+            articleSuffix = '';
+            return;
+        }
+        if(origin.includes(copy)) {
+            articleSuffix = copy;
+            if(copy == '0') articleSuffix == '';
+        } else {
+            articleSuffix = '';
+        }
+        
+    })
+    console.log(articleSuffix);
+    
+    return mongoose.model(`Article${articleSuffix}`, articleSchema);
+}

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+/* const mongoose = require('mongoose');
 const Joi = require('joi');
 const { boolean } = require('joi');
 
@@ -104,4 +104,4 @@ const articleSchema = new mongoose.Schema({
 
 const ArticleX = mongoose.model('Article1', articleSchema);
 
-module.exports = ArticleX;
+module.exports = ArticleX; */

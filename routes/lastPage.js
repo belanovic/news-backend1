@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const Article = require('../models/Article');
 const auth = require('../middleware/auth');
 const modifyError = require('modifyerror');
 
-router.post('/lastPage', auth, async (req, res) => {
 
+
+router.post('/lastPage', auth, async (req, res) => {
+    const Article = require('../models/Article')(req.headers.origin);
     const category = req.body.category;
     const title = req.body.title;
     const tag = req.body.tag;

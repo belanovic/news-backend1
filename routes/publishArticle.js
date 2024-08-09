@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const Article = require('../models/Article');
 const auth = require('../middleware/auth');
 const modifyError = require('modifyerror');
 
 router.put('/publishArticle/:id', auth, async (req, res) => {
+    const Article = require('../models/Article')(req.headers.origin);
     try {
         const publishedArticle = await Article.findByIdAndUpdate(
             req.params.id, 

@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const Article = require('../models/Article');
 const auth = require('../middleware/auth');
 const modifyError = require('modifyerror')
 
+
+
 router.get('/frontpageArticlesCMS', auth, async (req, res) => {
+    
+    const Article = require('../models/Article')(req.headers.origin);
+
     try {
         const articles = await Article
             .find({
@@ -19,6 +23,8 @@ router.get('/frontpageArticlesCMS', auth, async (req, res) => {
     }
 })
 router.get('/frontpageArticlesFE', async (req, res) => {
+
+    const Article = require('../models/Article')(req.headers.origin);
 
     try {
         const frontpageArticles = await Article

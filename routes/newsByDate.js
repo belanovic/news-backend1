@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const Article = require('../models/Article');
 const auth = require('../middleware/auth');
 const modifyError = require('modifyerror');
 
+
 router.post('/articlesByDate', auth, async (req, res) => {
-   
+    const Article = require('../models/Article')(req.headers.origin);
     function NewsByDateMsg(isSuccess, result) {
         this.isSuccess = isSuccess; 
         if(isSuccess) {

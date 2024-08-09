@@ -23,11 +23,12 @@ module.exports = router; */
 
 const express = require('express');
 const router = express.Router();
-const Article = require('../models/Article');
 const modifyError = require('modifyerror');
 
-router.post('/category', async (req, res) => {
 
+
+router.post('/category', async (req, res) => {
+    const Article = require('../models/Article')(req.headers.origin);
     const category = req.body.category;
     const pageNum = parseInt(req.body.pageNum.number);
 

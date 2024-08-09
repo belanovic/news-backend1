@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const Article = require('../models/Article');
 const auth = require('../middleware/auth');
 const modifyError = require('modifyerror');
 
-router.post('/getLatestNews', async (req, res) => {
 
+
+router.post('/getLatestNews', async (req, res) => {
+    const Article = require('../models/Article')(req.headers.origin);
     const count = parseInt(req.body.count);
     const category = req.body.category;
 

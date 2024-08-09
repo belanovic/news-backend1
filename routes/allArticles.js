@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const Article = require('../models/Article');
 const auth = require('../middleware/auth');
 const modifyError = require('modifyerror');
 
+
 router.post('/allArticles', auth, async (req, res) => {
-    console.log(req.headers.origin);
+
+    const Article = require('../models/Article')(req.headers.origin);
+
     const category = req.body.category;
     const pageNum = parseInt(req.body.pageNum.number);
     const title = req.body.title;

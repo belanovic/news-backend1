@@ -1,10 +1,29 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
+const config = require('config');
 
 const settingsSchema = new mongoose.Schema({
     settings: {}
 })
 
-const Settings = mongoose.model('settings', settingsSchema);
+const copies = config.get('copies').split(' ');
 
-module.exports = Settings;
+module.exports = function createModel(origin) {
+    let settingsSuffix;
+
+    copies.forEach((copy, i) => {
+        if(origin.includes('localhost')) {
+            settingsSuffix = '';
+            return;
+        }
+        if(origin.includes(copy)) {
+            settingsSuffix = copy;
+            if(copy == '0') settingsSuffix == '';
+        } else {
+            settingsSuffix = '';
+        }
+        
+    })
+    
+    return mongoose.model(`settings${settingsSuffix}`, settingsSchema);
+}
