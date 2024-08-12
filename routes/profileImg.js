@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { User, validateUserAuth } = require('../models/User');
+const { validateUserAuth } = require('../models/User');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const { result } = require('lodash'); 
@@ -8,6 +8,9 @@ const auth = require('../middleware/auth');
 const modifyError = require('modifyerror'); 
 
 router.post('/updateProfilePhotoURL/:size', auth, async (req, res) => { 
+
+    const { createModel } = require('../models/User');
+    const User = createModel(req.headers.origin)
 
     function UpdateMsg(isSuccess, result) {
         this.isSuccess = isSuccess; 
