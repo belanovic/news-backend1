@@ -19,9 +19,7 @@ module.exports = function createModel(origin) {
         if(origin.includes(copy)) {
             settingsSuffix = copy;
             if(copy == '0') settingsSuffix == '';
-        } else {
-            settingsSuffix = '';
-        }
+        } 
         
     })
     

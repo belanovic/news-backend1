@@ -114,8 +114,6 @@ function createModel(origin) {
         if(origin.includes(copy)) {
             userSuffix = copy;
             if(copy == '0') userSuffix == '';
-        } else {
-            userSuffix = '';
         }
         
     })
