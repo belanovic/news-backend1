@@ -110,6 +110,9 @@ module.exports = function createModel(origin) {
     let articleSuffix;
 
     copies.forEach((copy, i) => {
+        console.log(origin);
+        console.log(copy);
+        console.log(articleSuffix);
         if(origin.includes('localhost')) {
             articleSuffix = '';
             return;
