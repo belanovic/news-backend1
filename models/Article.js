@@ -110,9 +110,7 @@ module.exports = function createModel(origin) {
     let articleSuffix;
 
     copies.forEach((copy, i) => {
-        console.log(origin);
-        console.log(copy);
-        console.log(articleSuffix);
+
         if(origin.includes('localhost')) {
             articleSuffix = '';
             return;
@@ -120,12 +118,8 @@ module.exports = function createModel(origin) {
         if(origin.includes(copy)) {
             articleSuffix = copy;
             if(copy == '0') articleSuffix == '';
-        } else {
-            articleSuffix = '';
-        }
-        
+        }        
     })
-    console.log(articleSuffix);
     
     return mongoose.model(`Article${articleSuffix}`, articleSchema);
 }
