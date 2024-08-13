@@ -107,17 +107,11 @@ const copies = config.get('copies').split(' ');
 
 module.exports = function createModel(origin) {
 
-    let articleSuffix;
+    let articleSuffix = ''
 
     copies.forEach((copy, i) => {
-
-        if(origin.includes('localhost')) {
-            articleSuffix = '';
-            return;
-        }
         if(origin.includes(copy)) {
             articleSuffix = copy;
-            if(copy == '0') articleSuffix == '';
         }        
     })
     

@@ -104,16 +104,12 @@ const copies = config.get('copies').split(' ');
 
 function createModel(origin) {
 
-    let userSuffix;
+    let userSuffix = '';
 
     copies.forEach((copy, i) => {
-        if(origin.includes('localhost')) {
-            userSuffix = '';
-            return;
-        }
+
         if(origin.includes(copy)) {
             userSuffix = copy;
-            if(copy == '0') userSuffix == '';
         }
         
     })

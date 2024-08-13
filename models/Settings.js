@@ -9,17 +9,13 @@ const settingsSchema = new mongoose.Schema({
 const copies = config.get('copies').split(' ');
 
 module.exports = function createModel(origin) {
-    let settingsSuffix;
+    let settingsSuffix = '';
 
     copies.forEach((copy, i) => {
-        if(origin.includes('localhost')) {
-            settingsSuffix = '';
-            return;
-        }
+
         if(origin.includes(copy)) {
             settingsSuffix = copy;
-            if(copy == '0') settingsSuffix == '';
-        } 
+        }
         
     })
     
