@@ -13,9 +13,15 @@ module.exports = function createModel(origin) {
 
     copies.forEach((copy, i) => {
 
+        if(origin.includes('localhost')) {
+            settingsSuffix = ''
+            return
+        }
+
         if(origin.includes(copy)) {
             settingsSuffix = copy;
         }
+
         
     })
     

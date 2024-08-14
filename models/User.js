@@ -108,6 +108,11 @@ function createModel(origin) {
 
     copies.forEach((copy, i) => {
 
+        if(origin.includes('localhost')) {
+            userSuffix = ''
+            return
+        }
+
         if(origin.includes(copy)) {
             userSuffix = copy;
         }

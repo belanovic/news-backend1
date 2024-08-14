@@ -110,9 +110,13 @@ module.exports = function createModel(origin) {
     let articleSuffix = ''
 
     copies.forEach((copy, i) => {
+        if(origin.includes('localhost')) {
+            articleSuffix = ''
+            return
+        }
         if(origin.includes(copy)) {
             articleSuffix = copy;
-        }        
+        }
     })
     
     return mongoose.model(`Article${articleSuffix}`, articleSchema);
