@@ -20,7 +20,7 @@ router.get('/getSettingsCMS', auth, async (req, res) => {
 
     try {
         const settingsSchemaObj = await Settings.find();
-        return res.json({settingsMsg: new SettingsMsg(true, settingsSchemaObj[0].settings)});
+        return res.json({settingsMsg: new SettingsMsg(true, JSON.parse(settingsSchemaObj[0].settings))});
     }
 
     catch(error){
@@ -43,7 +43,7 @@ router.get('/getSettingsFE', async (req, res) => {
 
     try {
         const settingsSchemaObj = await Settings.find();
-        return res.json({settingsMsg: new SettingsMsg(true, settingsSchemaObj[0].settings)});
+        return res.json({settingsMsg: new SettingsMsg(true, JSON.parse(settingsSchemaObj[0].settings))});
     }
 
     catch(error){
@@ -65,19 +65,21 @@ router.put('/updateSettings', auth, async (req, res) => {
         }
     }
 
-
+    
     try {
+        const settings = JSON.stringify(req.body.settings);
+
         /* const newSettings = new Settings({settings: settings});
         const savedSettings = await newSettings.save();
         console.log(savedSettings); */
 
-        if(!req.body.settings || JSON.stringify(req.body.settings).length > 100000) {
+        if(!req.body.settings || settings.length > 100000) {
             return res.json({settingsMsg: new SettingsMsg(false, "False settings data")});
         }
 
-        const updatedSchemaObj = await Settings.findOneAndUpdate({}, {settings: req.body.settings}, {new: true});
+        const updatedSchemaObj = await Settings.findOneAndUpdate({}, {settings: settings}, {new: true});
     
-        return res.json({settingsMsg: new SettingsMsg(true, updatedSchemaObj.settings)});
+        return res.json({settingsMsg: new SettingsMsg(true, JSON.parse(updatedSchemaObj.settings))});
     }
     catch(error){
         res.json({error: modifyError(error)});

@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const config = require('config');
-const defaultSettings = require('./defaultSettings');
 
 router.get('/initial/:id', async (req, res) => {
+
 
     let id = req.params.id;
     let deleteOperation = false;
@@ -20,8 +20,9 @@ router.get('/initial/:id', async (req, res) => {
     const Article = require('../models/Article')('');
     const ArticleX = require('../models/Article')(id);
     const SettingsX = require('../models/Settings')(id);
+    const Settings1 = require('../models/Settings')('1');
 
-
+    
     async function emptyCollection(ModelArticle, ModelSettings) {
         const deleteMsgArticle = await ModelArticle.deleteMany();
         const deleteMsgSettings = await ModelSettings.deleteMany();
@@ -32,7 +33,9 @@ router.get('/initial/:id', async (req, res) => {
     }
     if(deleteOperation)return res.json({deleteMsg: await emptyCollection(ArticleX, SettingsX)});
 
-    
+    const result = await Settings1.find();
+    const defaultSettings = result[0].settings;
+    console.log(defaultSettings)
     const savedSettings = await new SettingsX(defaultSettings).save();
     
     const articles = await Article
