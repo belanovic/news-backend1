@@ -4,6 +4,8 @@ const auth = require('../middleware/auth');
 const modifyError = require('modifyerror');
 
 
+
+
 router.post('/allArticles', auth, async (req, res) => {
 
     const Article = require('../models/Article')(req.headers.origin);

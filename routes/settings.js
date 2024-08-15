@@ -71,8 +71,7 @@ router.put('/updateSettings', auth, async (req, res) => {
         const savedSettings = await newSettings.save();
         console.log(savedSettings); */
 
-
-        if(!req.body.settings || JSON.stringify(req.body.settings).length > 10000) {
+        if(!req.body.settings || JSON.stringify(req.body.settings).length > 100000) {
             return res.json({settingsMsg: new SettingsMsg(false, "False settings data")});
         }
 
