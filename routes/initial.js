@@ -33,10 +33,10 @@ router.get('/initial/:id', async (req, res) => {
     }
     if(deleteOperation)return res.json({deleteMsg: await emptyCollection(ArticleX, SettingsX)});
 
-    const result = await Settings1.find();
-    const defaultSettings = result[0].settings;
-    console.log(defaultSettings)
-    const savedSettings = await new SettingsX(defaultSettings).save();
+    const settings1 = await Settings1.find();
+    const defaultSettings = settings1[0].settings;
+    const resultX = await new SettingsX({settings: defaultSettings}).save();
+
     
     const articles = await Article
             .find()
@@ -77,10 +77,11 @@ router.get('/initial/:id', async (req, res) => {
 
     })
     const savedArticles = await ArticleX.find();
+    const savedSettings = await SettingsX.find();
         
     return res.json({savedData: {
         savedArticles: savedArticles,
-        savedSettings: savedSettings
+        savedSettings: savedSettings[0]
     }});
 })
 
