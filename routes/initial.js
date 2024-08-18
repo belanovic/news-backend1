@@ -6,6 +6,7 @@ router.get('/initial/:id', async (req, res) => {
 
 
     let id = req.params.id;
+    if(id == 'check') return res.json(await check());
     let deleteOperation = false;
 
     if(id.includes('delete')) {
@@ -21,6 +22,17 @@ router.get('/initial/:id', async (req, res) => {
     const ArticleX = require('../models/Article')(id);
     const SettingsX = require('../models/Settings')(id);
     const Settings1 = require('../models/Settings')('1');
+
+    async function check() {
+        const Article = require('../models/Article')('');
+        const Settings1 = require('../models/Settings')('1');
+        const articles = await Article.find();
+        const settings1 = await Settings1.find();
+        return {data: {
+            articles: articles,
+            settings1: settings1
+        }}
+    }
 
     
     async function emptyCollection(ModelArticle, ModelSettings) {
