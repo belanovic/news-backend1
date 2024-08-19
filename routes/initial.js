@@ -6,7 +6,9 @@ router.get('/initial/:id', async (req, res) => {
 
 
     let id = req.params.id;
+
     if(id == 'check') return res.json(await check());
+    
     let deleteOperation = false;
 
     if(id.includes('delete')) {
@@ -56,7 +58,7 @@ router.get('/initial/:id', async (req, res) => {
  
     articles.forEach(async (article, i) => {
 
-        const modifiedArticle = new ArticleX({
+        const copyArticle = new ArticleX({
             category: article.category,
             published: article.published,
             position: article.position,
@@ -65,27 +67,27 @@ router.get('/initial/:id', async (req, res) => {
             subtitle: article.subtitle,
             text: article.text,
             paragraphs: article.paragraphs,
-            imgURL: 'generic',
-            imgName: 'generic',
-            imgURL2: 'generic',
-            imgName2: 'generic',
+            imgURL: article.imgURL /* 'generic' */,
+            imgName: article.imgName /* 'generic' */,
+            imgURL2: article.imgURL2 /* 'generic' */,
+            imgName2: article.imgName2 /* 'generic' */,
             imgFilter: article.imgFilter,
             imgFilter2: article.imgFilter2,
-            videoURL: 'none',
-            videoName: 'none',
+            videoURL: article.videoURL /* 'none' */,
+            videoName: article.videoName /* 'none' */,
             dateCreated: article.dateCreated,
             dateUpdated: article.dateUpdated,
             datePublished: article.datePublished, 
-            imgDescription: '', 
-            videoDescription: 'none', 
+            imgDescription: article.imgDescription /* '' */, 
+            videoDescription: article.videoDescription /* 'none' */, 
             source: article.source,
             author: article.author,
             tagsArr: article.tagsArr, 
             note: article.note
         })
-        let savedArticle = await modifiedArticle.save();
-        /* modifiedArticles.push(savedArticle); */
-        /* modifiedArticles.push(article.title);  */
+        let savedArticle = await copyArticle.save();
+        /* copyArticle.push(savedArticle); */
+        /* copyArticle.push(article.title);  */
 
     })
     const savedArticles = await ArticleX.find();
