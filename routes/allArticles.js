@@ -2,11 +2,10 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const modifyError = require('modifyerror');
-
-
-
+const dateQuery = require('./dateQuery');
 
 router.post('/allArticles', auth, async (req, res) => {
+ 
 
     const Article = require('../models/Article')(req.headers.origin);
 
@@ -17,44 +16,27 @@ router.post('/allArticles', auth, async (req, res) => {
     const regTitle = new RegExp(`${title}`, 'gi');
     const regTag = new RegExp(`${tag}`, 'gi');
  
-
     try {
-        let count = await Article.find(category == 'allArticles'? 
-        {
-            title: {$regex: regTitle},
-            tagsArr: {$in: [regTag]}
-        }
-        : 
-        {
-            title: {$regex: regTitle},
-            tagsArr: {$in: [regTag]},
-            category: category
-        })
-        .countDocuments()
 
         let articles = await Article
             .find(category == 'allArticles'? 
                 {
                     title: {$regex: regTitle},
-                    tagsArr: {$in: [regTag]}
+                    tagsArr: {$in: [regTag]},
+                    dateCreated: dateQuery(req.body.selectedDate)
                 }
                 : 
                 {
                     title: {$regex: regTitle},
                     tagsArr: {$in: [regTag]},
-                    category: category
+                    category: category,
+                    dateCreated: dateQuery(req.body.selectedDate)
                 }
             )
             .skip((pageNum - 1) * 10)
             .limit(10)
             .sort({dateUpdated: -1})
 
-        if(req.body.selectedDate != null) {
-            const queryDate = new Date(req.body.selectedDate).toDateString();
-            articles = articles.filter((article) => {
-                return article.dateCreated.toDateString() == queryDate
-            })
-        }
         res.json({articlesMsg: {
             articles: articles
         }});

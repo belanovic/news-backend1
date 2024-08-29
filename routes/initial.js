@@ -21,9 +21,9 @@ router.get('/initial/:id', async (req, res) => {
     if(!copies.some(copy => (copy == id))) return res.json({savedArticlesSettings: []}); 
 
     const Article = require('../models/Article')('');
+    const Settings1 = require('../models/Settings')('1');
     const ArticleX = require('../models/Article')(id);
     const SettingsX = require('../models/Settings')(id);
-    const Settings1 = require('../models/Settings')('1');
 
     async function check() {
         const Article = require('../models/Article')('');
