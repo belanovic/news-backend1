@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const config = require('config');
 
-router.get('/initial/:id', async (req, res) => {
+router.get('/initial/:type/:id', async (req, res) => {
 
+    let type = req.params.type;
+    if((type != 'articles') && (type != 'settings')) return res.json('wrong type of initial'); 
 
     let id = req.params.id;
 
@@ -37,26 +39,30 @@ router.get('/initial/:id', async (req, res) => {
     }
 
     
-    async function emptyCollection(ModelArticle, ModelSettings) {
-        const deleteMsgArticle = await ModelArticle.deleteMany();
-        const deleteMsgSettings = await ModelSettings.deleteMany();
+    async function emptyCollection(Model) {
+        const deleteMsg = await Model.deleteMany();
         return {deleteMsg: {
-            deleteMsgArticle: deleteMsgArticle,
-            deleteMsgSettings: deleteMsgSettings
+            deleteMsg: deleteMsg
         }}
     }
-    if(deleteOperation)return res.json({deleteMsg: await emptyCollection(ArticleX, SettingsX)});
+    if(deleteOperation)return res.json({deleteMsg: await emptyCollection(type == 'articles'? ArticleX : SettingsX)});
 
     const settings1 = await Settings1.find();
     const defaultSettings = settings1[0].settings;
     const resultX = await new SettingsX({settings: defaultSettings}).save();
 
-    
-    const articles = await Article
+    if(type == 'settings') {
+        const savedSettings = await SettingsX.find();
+        return res.json({savedSettings: savedSettings[0]});
+    }
+
+    if(type == 'articles') {
+
+        const articles = await Article
             .find()
             /* .find({dateCreated: {$gte:  new Date("2024, 8, 3")}}) */
- 
-    articles.forEach(async (article, i) => {
+
+        articles.forEach(async (article, i) => {
 
         const copyArticle = new ArticleX({
             category: article.category,
@@ -91,12 +97,9 @@ router.get('/initial/:id', async (req, res) => {
 
     })
     const savedArticles = await ArticleX.find();
-    const savedSettings = await SettingsX.find();
-        
-    return res.json({savedData: {
-        savedArticles: savedArticles,
-        savedSettings: savedSettings[0]
-    }});
+    return res.json({savedArticles: savedArticles });
+    }
+
 })
 
 module.exports = router;
