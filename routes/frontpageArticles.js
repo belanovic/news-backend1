@@ -12,7 +12,7 @@ router.get('/frontpageArticlesCMS', auth, async (req, res) => {
     try {
         const articles = await Article
             .find({
-                position: {$gt: 0, $lt: 100},
+                position: {$gt: 0, $lte: 100},
                 published: true
             }) 
             .sort({position: 1}) 
