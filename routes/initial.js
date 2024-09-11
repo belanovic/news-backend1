@@ -11,7 +11,7 @@ router.get('/initial/:type/:from/:to/', async (req, res) => {
     let from = req.params.from;
     if(!copies.some(elem => (elem == from))) return res.json('incorrect name of copy'); 
     let to = req.params.to;
-    if(to == '0')return res.json('0 copy can not be changed');
+    /* if(to == '0')return res.json('0 copy can not be changed'); */
     if(!copies.some(elem => (elem == to))) return res.json('incorrect name of copy'); 
 
     if((type == 'set')) {
@@ -137,7 +137,7 @@ router.get('/clear/:type/:copy', async (req, res) => {
 
     let copy = req.params.copy;
     if(!copies.some(elem => (elem == copy))) return res.json('incorrect name of copy');
-    if(copy == '0')return res.json('0 copy can not be changed');
+    /* if(copy == '0')return res.json('0 copy can not be changed'); */
 
     async function emptyCollection(Model) {
         const deleteMsg = await Model.deleteMany();

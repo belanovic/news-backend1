@@ -10,25 +10,30 @@ router.put('/updateFrontpage', auth, async (req, res) => {
         const allArticles = await Article.find();
         const modifiedAllArticles = allArticles.map((prom) => {
     
-            const idAndPositionMatch = req.body.idAndPositionArr.filter((idAndPosition) => {
+            const idMatch = req.body.idAndPositionArr.filter((idAndPosition) => {
                 return idAndPosition.id === prom._id.toString()
             });
-            const newArticlePosition = idAndPositionMatch.length > 0? parseInt(idAndPositionMatch[0].newPosition) : 0;
-           /*  const modifiedArticle = Object.assign({}, prom);
-            modifiedArticle.position = newArticlePosition;
-            return modifiedArticle; */
+            const newArticlePosition = idMatch.length > 0? parseInt(idMatch[0].newPosition) : 0;
             const modifiedArticle = prom;
             modifiedArticle.position = newArticlePosition;
+            if(idMatch.length > 0) {
+                modifiedArticle.published = true;
+            }
             return modifiedArticle
         })
         /* modifiedAllArticles.sort((a, b) => a.position - b.position) */
 
         modifiedAllArticles.forEach(async (prom) => {
-            const article = await Article.findByIdAndUpdate(prom._id, {position: prom.position}, {new: true});
+            const article = await Article.findByIdAndUpdate(prom._id, {position: prom.position, published: prom.published}, {new: true});
         })
 
-        /* const article = await Article.findByIdAndUpdate(req.params.id, {position: req.body.position}, {new: true}); */
-        res.json({modifiedAllArticles: modifiedAllArticles});
+        const frontpageArticles = await Article
+            .find({
+                position: {$gt: 0, $lt: 100},
+                published: true
+            }) 
+            .sort({position: 1}) 
+        res.json({frontpageArticles: frontpageArticles});
     }
     catch(error){
         res.json({error: modifyError(error)});

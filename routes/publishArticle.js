@@ -9,8 +9,8 @@ router.put('/publishArticle/:id', auth, async (req, res) => {
         const publishedArticle = await Article.findByIdAndUpdate(
             req.params.id, 
             {published: req.body.published, 
-                datePublished: req.body.datePublished, 
-                dateUpdated: req.body.dateUpdated
+             datePublished: req.body.datePublished, 
+             dateUpdated: req.body.dateUpdated
             },
             {new: true}
         );
