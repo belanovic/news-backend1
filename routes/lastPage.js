@@ -18,6 +18,7 @@ router.post('/lastPage', auth, async (req, res) => {
         let count = await Article.find(category == 'allArticles'? 
         {
             title: {$regex: regTitle},
+            tagsArr: {$regex: regTag},
             dateCreated: dateQuery(req.body.selectedDate)
         }
         : 
@@ -33,6 +34,7 @@ router.post('/lastPage', auth, async (req, res) => {
             .find(category == 'allArticles'? 
                 {
                     title: {$regex: regTitle},
+                    tagsArr: {$regex: regTag},
                     dateCreated: dateQuery(req.body.selectedDate)
                 }
                 : 

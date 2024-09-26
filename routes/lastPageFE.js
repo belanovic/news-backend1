@@ -13,7 +13,16 @@ router.post('/lastPageFE', async (req, res) => {
 
     try {
         const count = await Article
-            .find({category: category})
+            .find(tag == undefined? 
+            {
+                category: category
+                
+            }
+            : 
+            {
+                category: category,
+                tagsArr: {$in: [tag]}
+            })
             .countDocuments()
 
         const newsByCategory = await Article
