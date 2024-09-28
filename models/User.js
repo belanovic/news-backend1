@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        minLength: 6,
+        minLength: 5,
         maxLength: 1024,
         required: true
     },
@@ -77,7 +77,7 @@ function validateUser(user) {
         firstName: Joi.string().min(3).max(50).required(),
         lastName:  Joi.string().min(3).max(50).required(),
         username:  Joi.string().min(3).max(50).required(),
-        password:  Joi.string().min(6).max(255).required(),
+        password:  Joi.string().min(5).max(255).required(),
         email:  Joi.string().min(10).max(60).email().required(),
         profileImgNameLarge: Joi.string().min(7).max(10000).required(),
         profileImgURLLarge: Joi.string().min(7).max(10000).required(),
@@ -89,7 +89,7 @@ function validateUser(user) {
 function validateUserAuth(userAuth) {
     const schema = Joi.object( {
         username:  Joi.string().min(3).max(50).required(),
-        password:  Joi.string().min(6).max(255).required()
+        password:  Joi.string().min(5).max(255).required()
     })
     return schema.validate(userAuth);
 }
@@ -129,7 +129,7 @@ function validateData(type, userData) {
             firstName: Joi.string().min(3).max(50).required(),
             lastName:  Joi.string().min(3).max(50).required(),
             username:  Joi.string().min(3).max(50).required(),
-            password:  Joi.string().min(6).max(255).required(),
+            password:  Joi.string().min(5).max(255).required(),
             email:  Joi.string().min(10).max(60).email().required(),
             profileImgNameLarge: Joi.string().min(7).max(10000).required(),
             profileImgURLLarge: Joi.string().min(7).max(10000).required(),
@@ -139,7 +139,7 @@ function validateData(type, userData) {
     } else if(type == 'login') {
         template = {
             username: Joi.string().min(3).max(50).required(),
-            password: Joi.string().min(6).max(255).required()
+            password: Joi.string().min(5).max(255).required()
         }
     } else {
         return;
