@@ -18,7 +18,6 @@ const lastPageFE = require('../routes/lastPageFE.js');
 const getLatestNews = require('../routes/getLatestNews.js');
 const settings = require('../routes/settings.js');
 const weather = require('../routes/weather.js');
-const initial = require('../routes/initial.js');
 
 module.exports = function(app) {
     app.use('/', allArticles);
@@ -41,5 +40,4 @@ module.exports = function(app) {
     app.use('/', getLatestNews);
     app.use('/', settings);
     app.use('/', weather);
-    app.use('/', initial);
 }
